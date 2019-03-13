@@ -20,7 +20,8 @@
         },
       methods:{
         dynamiteClick(){
-          this.$store.dispatch('addClick')
+          this.$store.dispatch('addClick',1)
+          this.$store.dispatch('gameStarted')
           this.click=true;
           var randomNumber = Math.floor(Math.random() * 360 )+1;
           this.rndColor = randomNumber;

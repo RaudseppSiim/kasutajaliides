@@ -1,6 +1,6 @@
 <template>
     <div>
-      <button @click="buyClicker">OSTA CLICKER</button>
+      <button class="button" @click="buyClicker">OSTA CLICKER</button>
     </div>
 </template>
 

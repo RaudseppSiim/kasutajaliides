@@ -3,22 +3,31 @@ export const state = () => ({
     active: false,
   },
   dynamaite:{
+    gameStarted:false,
     clickCount:0,
-    clickerBuy:false
+    clickerBuy:false,
+    clickersBought:0,
   }
 
 })
 
 export const mutations = {
   setModalActive (state, value) {
-    state.modal.active = value;
+    state.modal.active = value
   },
-  addDynamiteOne (state) {
-    state.dynamaite.clickCount++;
+  addDynamite (state,payload) {
+    state.dynamaite.clickCount += payload
   },
   buyClickers (state) {
     state.dynamaite.clickCount -= 10
+    state.dynamaite.clickersBought++
     state.dynamaite.clickerBuy=true
+  },
+  resetBuyClickers (state) {
+    state.dynamaite.clickerBuy=false
+  },
+  gameStarted(state) {
+    state.dynamaite.gameStarted=true
   }
 }
 
@@ -27,11 +36,16 @@ export const actions = {
     console.log(context);
     context.commit('setModalActive', !context.state.modal.active);
   },
-  addClick (context) {
-    console.log(context);
-    context.commit('addDynamiteOne');
+  addClick (context,payload) {
+    context.commit('addDynamite',payload);
   },
   buyClicker(context) {
     context.commit('buyClickers');
+  },
+  resetBuyClicker(context) {
+    context.commit('resetBuyClickers');
+  },
+  gameStarted(context) {
+    context.commit('gameStarted');
   }
 }
