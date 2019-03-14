@@ -4,24 +4,32 @@
         <Click></Click>
       </div>
       <div class="result">{{parseInt(result.clickCount)}}</div>
-      <div v-if="result.clickCount>10">
+      <div v-if="result.clickCount>=10">
         <buy-clicker></buy-clicker>
       </div>
       <div v-if="result.clickersBought>=1">
         <p>{{result.clickersBought}}</p>
       </div>
+      <div>
+        <game-ended></game-ended>
+      </div>
+      <div>
+        {{$moment.format(result.gameStartTime-$moment.now())}}
+      </div>
     </div>
 </template>
 
 <script>
-    import Click from "../components/Click";
-    import BuyClicker from "../components/buyClicker";
+    import Click from "../components/clickerGame/Click";
+    import BuyClicker from "../components/clickerGame/buyClicker";
+    import GameEnded from "../components/clickerGame/GameEnded";
+    import moment from "moment";
     var inter
     var downInter
 
     export default {
         name: "DynamitClicker",
-      components: {BuyClicker, Click},
+      components: {GameEnded, BuyClicker, Click},
       data() {
         return {
           click: this.$store.state.dynamaite.clickCount
@@ -39,6 +47,12 @@
           clearInterval(downInter);
           downInter=setInterval(()=>{
             this.$store.dispatch('addClick', -(1))
+
+            if(this.$store.state.dynamaite.clickCount<0){
+              this.$store.dispatch('gameOverAction');
+              clearInterval(downInter);
+              clearInterval(inter);
+            }
           },1500/(clickerscount+1))
         },
       },

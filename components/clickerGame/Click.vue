@@ -1,12 +1,13 @@
 <template>
     <div>
       <a @click="dynamiteClick">
-        <img :style="filter" draggable="false" v-bind:class="{'clicked':click}" src="../static/dynamite-svgrepo-com.svg">
+        <img :style="filter" draggable="false" v-bind:class="{'clicked':click}" src="../../static/dynamite-svgrepo-com.svg">
       </a>
     </div>
 </template>
 
 <script>
+    import moment from "moment";
     export default {
         name: "Click",
         data(){
@@ -21,7 +22,9 @@
       methods:{
         dynamiteClick(){
           this.$store.dispatch('addClick',1)
-          this.$store.dispatch('gameStarted')
+          if(this.$store.state.dynamaite.gameStarted===false) {
+            this.$store.dispatch('gameStarted', moment.now())
+          }
           this.click=true;
           var randomNumber = Math.floor(Math.random() * 360 )+1;
           this.rndColor = randomNumber;

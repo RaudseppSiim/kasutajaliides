@@ -57,7 +57,11 @@ module.exports = {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
+    '@nuxtjs/moment'
   ],
+  moment:{
+    locales:['fa']
+  },
   /*
   ** Axios module configuration
   */

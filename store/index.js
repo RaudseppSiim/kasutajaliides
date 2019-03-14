@@ -1,12 +1,15 @@
+
 export const state = () => ({
   modal: {
     active: false,
   },
   dynamaite:{
     gameStarted:false,
+    gameStartTime:null,
     clickCount:0,
     clickerBuy:false,
     clickersBought:0,
+    gameOver:false
   }
 
 })
@@ -26,8 +29,19 @@ export const mutations = {
   resetBuyClickers (state) {
     state.dynamaite.clickerBuy=false
   },
-  gameStarted(state) {
+  gameStarted(state,value) {
+    state.dynamaite.gameStartTime=value;
     state.dynamaite.gameStarted=true
+  },
+  gameOver(state,value){
+    state.dynamaite.gameOver=value
+  },
+  resetGame(state){
+    state.dynamaite.gameStarted=false
+    state.dynamaite.clickCount=0
+    state.dynamaite.clickerBuy=false
+    state.dynamaite.clickersBought=0,
+    state.dynamaite.gameOver=false
   }
 }
 
@@ -45,7 +59,13 @@ export const actions = {
   resetBuyClicker(context) {
     context.commit('resetBuyClickers');
   },
-  gameStarted(context) {
-    context.commit('gameStarted');
+  gameStarted(context,value) {
+    context.commit('gameStarted',value);
+  },
+  gameOverAction(context) {
+    context.commit('gameOver',!context.state.dynamaite.gameOver);
+  },
+  resetGame(context){
+    context.commit('resetGame');
   }
 }
