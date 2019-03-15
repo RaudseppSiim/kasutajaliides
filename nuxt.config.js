@@ -60,7 +60,7 @@ module.exports = {
     '@nuxtjs/moment'
   ],
   moment:{
-    locales:['fa']
+
   },
   /*
   ** Axios module configuration

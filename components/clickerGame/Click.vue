@@ -23,7 +23,7 @@
         dynamiteClick(){
           this.$store.dispatch('addClick',1)
           if(this.$store.state.dynamaite.gameStarted===false) {
-            this.$store.dispatch('gameStarted', moment.now())
+            this.$store.dispatch('gameStarted', this.$moment())
           }
           this.click=true;
           var randomNumber = Math.floor(Math.random() * 360 )+1;

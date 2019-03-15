@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+      <div>Duration: {{this.duration}}</div>
+
       <div class="clicker">
         <Click></Click>
       </div>
@@ -8,13 +10,10 @@
         <buy-clicker></buy-clicker>
       </div>
       <div v-if="result.clickersBought>=1">
-        <p>{{result.clickersBought}}</p>
+        <p>clickers: {{result.clickersBought}}</p>
       </div>
       <div>
         <game-ended></game-ended>
-      </div>
-      <div>
-        {{$moment.format(result.gameStartTime-$moment.now())}}
       </div>
     </div>
 </template>
@@ -32,7 +31,9 @@
       components: {GameEnded, BuyClicker, Click},
       data() {
         return {
-          click: this.$store.state.dynamaite.clickCount
+          click: this.$store.state.dynamaite.clickCount,
+          downCounter:0,
+          duration:""
         }
       },
 
@@ -46,14 +47,22 @@
         downItervaler(clickerscount){
           clearInterval(downInter);
           downInter=setInterval(()=>{
-            this.$store.dispatch('addClick', -(1))
+            var newCurrentTime = this.$moment(this.$moment())
+            var time = this.$moment.duration(newCurrentTime.diff(this.result.gameStartTime))
 
+            this.duration=this.$moment(time.asMilliseconds(),"").format("mm:ss")
+            if(parseInt(time.as("second"))%6<1)
+            {
+              this.downCounter++;
+            }
+            this.$store.dispatch('addClick', -(parseInt(this.downCounter)))
             if(this.$store.state.dynamaite.clickCount<0){
               this.$store.dispatch('gameOverAction');
+              this.downCounter=1;
               clearInterval(downInter);
               clearInterval(inter);
             }
-          },1500/(clickerscount+1))
+          },1000)
         },
       },
       computed: {

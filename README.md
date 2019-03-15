@@ -19,4 +19,11 @@ $ npm start
 $ npm run generate
 ```
 
+``` bash
+
+# school work (dynoclicker is at domain )
+http://localhost:3000/dynamitclicker
+
+```
+
 For detailed explanation on how things work, checkout [Nuxt.js docs](https://nuxtjs.org).
